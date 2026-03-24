@@ -6,7 +6,9 @@ Syncs your installed Claude global scope with the latest version of Liav's prefe
 
 ## Steps
 
-1. **Fetch** the latest state of the repo (`https://github.com/liavbarsheshet/claude`)
+1. **Fetch** the latest state of the repo:
+   - Try SSH first: `git@github.com:liavbarsheshet/claude.git`
+   - Fall back to HTTPS if SSH fails: `https://github.com/liavbarsheshet/claude`
 2. **Read** `changelog.md` to identify what changed since last sync
 3. **Diff** each folder against what is currently installed in `~/.claude/`:
    - `commands/` vs `~/.claude/commands/`
