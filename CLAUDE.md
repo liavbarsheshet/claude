@@ -7,6 +7,16 @@ By reading this file and following the instructions below, you will install ever
 
 ## How To Learn From This Repo
 
+Before starting, ask the user:
+
+> "Where should I install these preferences?
+> 1. **Global** — available across all projects on this machine (`~/.claude/`)
+> 2. **Local** — current project only (`./.claude/`)"
+
+Wait for the user to choose before proceeding. Use the chosen scope for all installation steps below.
+
+---
+
 Follow these steps in order:
 
 ### 1. Commands
@@ -24,14 +34,6 @@ Follow these steps in order:
 ### 4. Preferences
 - For each `.md` file in `preferences/` (excluding `@external.md`): read and analyze its content, then merge it into `~/.claude/CLAUDE.md`
 - Read `preferences/@external.md` and learn each preference listed there from its URL, then merge it
-
----
-
-## Global vs Local
-
-By default, everything installs to `~/.claude/` (global — active across all projects on this machine).
-
-If the user specifies **"learn locally"**, install everything to `./.claude/` of the current project instead.
 
 ---
 
