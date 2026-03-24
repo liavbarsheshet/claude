@@ -4,4 +4,9 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | add | changelog_reminder hook in .claude/ to enforce changelog updates after every push
+2026-03-24 | add | coding_style preference
+2026-03-24 | add | /analyze command
+2026-03-24 | add | /sync_liav command
+2026-03-24 | add | @external.md per folder and skills nested subfolder convention
 2026-03-24 | add | initial repo structure with CLAUDE.md and changelog
