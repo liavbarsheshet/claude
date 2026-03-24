@@ -10,20 +10,20 @@ By reading this file and following the instructions below, you will install ever
 Follow these steps in order:
 
 ### 1. Commands
-Copy all `.md` files from `commands/` → `~/.claude/commands/`
+- Copy all `.md` files from `commands/` (excluding `@external.md`) → `~/.claude/commands/`
+- Read `commands/@external.md` and learn each command listed there from its URL
 
 ### 2. Skills
-Copy all `.md` files from `skills/` → `~/.claude/commands/`
+- For each subfolder in `skills/`, learn the skill defined inside it and install it into `~/.claude/commands/`
+- Read `skills/@external.md` and learn each skill listed there from its URL
 
 ### 3. Hooks
-For each file in `hooks/`:
-- Copy the script to `~/.claude/hooks/`
-- Register it in `~/.claude/settings.json` under the appropriate event
+- For each file in `hooks/` (excluding `@external.md`): copy the script to `~/.claude/hooks/` and register it in `~/.claude/settings.json`
+- Read `hooks/@external.md` and learn each hook listed there from its URL, then install and register them
 
 ### 4. Preferences
-For each `.md` file in `preferences/`:
-- Read and analyze its content
-- Merge it into `~/.claude/CLAUDE.md` as part of your global instructions
+- For each `.md` file in `preferences/` (excluding `@external.md`): read and analyze its content, then merge it into `~/.claude/CLAUDE.md`
+- Read `preferences/@external.md` and learn each preference listed there from its URL, then merge it
 
 ---
 
@@ -54,4 +54,5 @@ The `.claude/` folder in this repo is for **repo management only** — it contai
 ## File Naming Conventions
 
 - `<name>.md` — standard file
-- `@<name>.md` — sourced from an external/online origin
+- `@external.md` — present in every folder, contains a list of external URLs for Claude to learn from
+- `skills/<skill-name>/` — each skill lives in its own named subfolder

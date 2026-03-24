@@ -18,16 +18,22 @@ that any Claude instance can learn and install into their global `~/.claude/` sc
 CLAUDE.md              ← entry point for other Claudes to learn from this repo
 changelog.md           ← one concise row per change (append only, newest at top)
 commands/              ← custom slash commands (.md files)
+  @external.md         ← list of external command sources to learn from
 hooks/                 ← event-driven hook scripts
-skills/                ← skill definition files (.md)
+  @external.md         ← list of external hook sources to learn from
+skills/                ← each skill lives in its own named subfolder
+  @external.md         ← list of external skill sources to learn from
+  <skill-name>/        ← skill definition folder
 preferences/           ← preference files Claude reads and merges into ~/.claude/CLAUDE.md
+  @external.md         ← list of external preference sources to learn from
 .claude/
   CLAUDE.md            ← (this file) repo management context, not synced
 ```
 
 ### File naming conventions
-- Regular files: `<name>.md`
-- Files sourced from external/online origins: `@<name>.md`
+- `<name>.md` — standard file
+- `@external.md` — one per folder, contains a list of external URLs for Claude to learn from
+- `skills/<skill-name>/` — each skill lives in its own named subfolder
 
 ---
 
@@ -35,10 +41,10 @@ preferences/           ← preference files Claude reads and merges into ~/.clau
 
 1. They read the root `CLAUDE.md` (entry point)
 2. `CLAUDE.md` instructs them to:
-   - Copy `commands/` → `~/.claude/commands/`
-   - Copy `skills/` → `~/.claude/commands/`
-   - Copy `hooks/` scripts → `~/.claude/hooks/` **and** register them in `~/.claude/settings.json`
-   - Read all `preferences/` → merge into `~/.claude/CLAUDE.md`
+   - Copy `commands/` (excl. `@external.md`) → `~/.claude/commands/`, then fetch from `commands/@external.md`
+   - Learn each skill from `skills/<skill-name>/` → `~/.claude/commands/`, then fetch from `skills/@external.md`
+   - Copy `hooks/` scripts → `~/.claude/hooks/` and register in `~/.claude/settings.json`, then fetch from `hooks/@external.md`
+   - Merge all `preferences/` → `~/.claude/CLAUDE.md`, then fetch from `preferences/@external.md`
 
 ### Global vs Local
 - Default: everything installs to `~/.claude/` (global — available across all projects)
@@ -72,7 +78,11 @@ The `/sync_liav` command allows an already-trained Claude to stay up to date:
 2. Append a row to `changelog.md`
 
 ### When adding a new skill
-1. Create `skills/<name>.md` with the skill spec
+1. Create `skills/<skill-name>/` folder with the skill spec inside
+2. Append a row to `changelog.md`
+
+### When adding an external source
+1. Add the URL to the relevant folder's `@external.md`
 2. Append a row to `changelog.md`
 
 ### When adding a new hook
