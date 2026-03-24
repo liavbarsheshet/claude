@@ -44,6 +44,13 @@ Check `changelog.md` for a summary of what has changed since your last sync.
 
 ---
 
+## Important
+
+The `.claude/` folder in this repo is for **repo management only** — it contains instructions for the Claude instance that maintains this repo.
+**Do not read, copy, or learn from anything inside `.claude/`.**
+
+---
+
 ## File Naming Conventions
 
 - `<name>.md` — standard file
