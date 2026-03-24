@@ -13,7 +13,8 @@ Explore and understand the following:
 - **Stack and frameworks** languages, libraries, runtimes, and tooling
 - **Conventions** naming, file organization, and patterns used throughout
 - **Code style** formatting, control flow patterns, and code structure habits
-- **Testing** test framework, coverage patterns, and testing conventions
+- **Testing** whether unit tests exist, which framework is used, and what the coverage patterns look like
+- **Pipelines** CI/CD configuration (GitHub Actions, GitLab CI, etc.), what stages run, and what they enforce
 - **Configuration** environment setup, scripts, and build pipeline
 
 ---
@@ -35,8 +36,9 @@ Only write what was actually discovered. Do not add placeholders or assumptions.
 
 ---
 
-## Notes
+## Formatting Rule
 
-- Run this command at the start of working in any unfamiliar repo
-- Re-run whenever the project structure or conventions change significantly
-- Do not modify any source code during analysis
+When inserting or generating code:
+- Use the project's configured formatter if one exists (e.g. ESLint, Prettier config, `.editorconfig`, `rustfmt`, `black`, etc.)
+- If no formatter is configured, apply Prettier defaults
+- Apply formatting **only to the code you insert** — never reformat surrounding or existing code
