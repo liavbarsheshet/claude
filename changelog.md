@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | add | anthropic frontend-design as external skill in skills/@external.md
 2026-03-25 | update | svg-icons skill — remove folder open, enforce silent execution, path shown in result
 2026-03-25 | update | svg-icons skill — add local .claude/svg option, fix Windows folder open via PowerShell
 2026-03-25 | update | svg-icons skill — remember last custom save path, show as option on next run
