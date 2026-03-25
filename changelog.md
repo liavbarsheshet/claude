@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | update | svg-icons skill — support multiple icons in a single request
 2026-03-25 | add | playwright MCP server (Microsoft @playwright/mcp)
 2026-03-25 | add | mcps/ folder — MCP server definitions as JSON files, installed into ~/.claude/settings.json
 2026-03-25 | add | ui-ux-pro-max-skill as external skill in skills/@external.md
