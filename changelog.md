@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | add | better-colors skill — color theory, psychology, 60-30-10 rule, accessibility, dark mode
 2026-03-25 | update | svg-icons skill — support multiple icons in a single request
 2026-03-25 | add | playwright MCP server (Microsoft @playwright/mcp)
 2026-03-25 | add | mcps/ folder — MCP server definitions as JSON files, installed into ~/.claude/settings.json
