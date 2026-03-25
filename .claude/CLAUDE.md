@@ -21,6 +21,9 @@ commands/              ← custom slash commands (.md files)
   @external.md         ← list of external command sources to learn from
 hooks/                 ← event-driven hook scripts
   @external.md         ← list of external hook sources to learn from
+  <hook-name>/         ← hook definition folder
+    hook.md            ← describes the hook and its settings.json registration
+    <script>           ← the hook script(s)
 skills/                ← each skill lives in its own named subfolder
   @external.md         ← list of external skill sources to learn from
   <skill-name>/        ← skill definition folder
@@ -43,7 +46,7 @@ preferences/           ← preference files Claude reads and merges into ~/.clau
 2. `CLAUDE.md` instructs them to:
    - Copy `commands/` (excl. `@external.md`) → `~/.claude/commands/`, then fetch from `commands/@external.md`
    - Learn each skill from `skills/<skill-name>/` → `~/.claude/commands/`, then fetch from `skills/@external.md`
-   - Copy `hooks/` scripts → `~/.claude/hooks/` and register in `~/.claude/settings.json`, then fetch from `hooks/@external.md`
+   - For each subfolder in `hooks/`: read `hook.md`, copy scripts to `~/.claude/hooks/<hook-name>/`, register per `hook.md`, then fetch from `hooks/@external.md`
    - Merge all `preferences/` → `~/.claude/CLAUDE.md`, then fetch from `preferences/@external.md`
 
 ### Global vs Local
@@ -86,8 +89,8 @@ The `/sync_liav` command allows an already-trained Claude to stay up to date:
 2. Append a row to `changelog.md`
 
 ### When adding a new hook
-1. Create `hooks/<name>.md` (or script file) with the hook spec
-2. Document the `settings.json` registration required
+1. Create `hooks/<hook-name>/hook.md` describing the hook and its `settings.json` registration
+2. Add the script file(s) inside the same subfolder
 3. Append a row to `changelog.md`
 
 ### When adding a new preference

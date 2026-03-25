@@ -28,7 +28,7 @@ Follow these steps in order:
 - Read `skills/@external.md` and learn each skill listed there from its URL
 
 ### 3. Hooks
-- For each file in `hooks/` (excluding `@external.md`): copy the script to `~/.claude/hooks/` and register it in `~/.claude/settings.json`
+- For each subfolder in `hooks/`, read its `hook.md` to understand the hook, copy all script files to `~/.claude/hooks/<hook-name>/`, and register it in `~/.claude/settings.json` using the registration block in `hook.md`
 - Read `hooks/@external.md` and learn each hook listed there from its URL, then install and register them
 
 ### 4. Preferences
@@ -58,3 +58,4 @@ The `.claude/` folder in this repo is for **repo management only** — it contai
 - `<name>.md` — standard file
 - `@external.md` — present in every folder, contains a list of external URLs for Claude to learn from
 - `skills/<skill-name>/` — each skill lives in its own named subfolder
+- `hooks/<hook-name>/` — each hook lives in its own named subfolder with a `hook.md` and script files
