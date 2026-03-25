@@ -27,6 +27,8 @@ hooks/                 ← event-driven hook scripts
 skills/                ← each skill lives in its own named subfolder
   @external.md         ← list of external skill sources to learn from
   <skill-name>/        ← skill definition folder
+mcps/                  ← MCP server definitions (one .json file per server)
+  @external.md         ← list of external MCP sources to learn from
 preferences/           ← preference files Claude reads and merges into ~/.claude/CLAUDE.md
   @external.md         ← list of external preference sources to learn from
 .claude/
@@ -37,6 +39,7 @@ preferences/           ← preference files Claude reads and merges into ~/.clau
 - `<name>.md` — standard file
 - `@external.md` — one per folder, contains a list of external URLs for Claude to learn from
 - `skills/<skill-name>/` — each skill lives in its own named subfolder
+- `mcps/<server-name>.json` — each MCP server is a single JSON file, filename becomes the `mcpServers` key
 
 ---
 
@@ -92,6 +95,10 @@ The `/sync_liav` command allows an already-trained Claude to stay up to date:
 1. Create `hooks/<hook-name>/hook.md` describing the hook and its `settings.json` registration
 2. Add the script file(s) inside the same subfolder
 3. Append a row to `changelog.md`
+
+### When adding a new MCP
+1. Create `mcps/<server-name>.json` with the MCP server config
+2. Append a row to `changelog.md`
 
 ### When adding a new preference
 1. Create `preferences/<name>.md` with the preference content

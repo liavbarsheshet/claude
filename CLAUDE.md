@@ -31,7 +31,11 @@ Follow these steps in order:
 - For each subfolder in `hooks/`, read its `hook.md` to understand the hook, copy all script files to `~/.claude/hooks/<hook-name>/`, and register it in `~/.claude/settings.json` using the registration block in `hook.md`
 - Read `hooks/@external.md` and learn each hook listed there from its URL, then install and register them
 
-### 4. Preferences
+### 4. MCPs
+- For each `.json` file in `mcps/`, read it and register the MCP server into `~/.claude/settings.json` under `mcpServers`, using the filename (without `.json`) as the server key
+- Read `mcps/@external.md` and learn each MCP listed there from its URL, then install it
+
+### 5. Preferences
 - For each `.md` file in `preferences/` (excluding `@external.md`): read and analyze its content, then merge it into `~/.claude/CLAUDE.md`
 - Read `preferences/@external.md` and learn each preference listed there from its URL, then merge it
 
@@ -59,3 +63,4 @@ The `.claude/` folder in this repo is for **repo management only** — it contai
 - `@external.md` — present in every folder, contains a list of external URLs for Claude to learn from
 - `skills/<skill-name>/` — each skill lives in its own named subfolder
 - `hooks/<hook-name>/` — each hook lives in its own named subfolder with a `hook.md` and script files
+- `mcps/<server-name>.json` — each MCP server is a single JSON file, filename becomes the `mcpServers` key
