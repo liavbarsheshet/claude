@@ -4,6 +4,8 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | add | code_dedup_check hook — checks for code duplication after every Edit/Write
+2026-03-25 | add | lint_runner hook — detects and runs linter after every Edit/Write, fixes on failure
 2026-03-25 | add | anthropic frontend-design as external skill in skills/@external.md
 2026-03-25 | update | svg-icons skill — remove folder open, enforce silent execution, path shown in result
 2026-03-25 | update | svg-icons skill — add local .claude/svg option, fix Windows folder open via PowerShell
