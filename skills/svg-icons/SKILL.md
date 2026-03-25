@@ -79,7 +79,7 @@ Example: `FaHome` → `C:/Users/liavb/AppData/Local/Temp/fa-home.svg`
 
 Then reply with only:
 ```
-[fa-home.svg](file:///C:/Users/liavb/AppData/Local/Temp/fa-home.svg) — FaHome · Font Awesome
+[fa-home.svg](file:///C:/Users/liavb/AppData/Local/Temp/fa-home.svg) · [open folder](file:///C:/Users/liavb/AppData/Local/Temp) — FaHome · Font Awesome
 ```
 
-Nothing else. No explanation. Just the link and the source attribution on one line.
+Nothing else. No explanation. Just the file link, folder link, and source attribution on one line.
