@@ -4,6 +4,9 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | refactor | hooks now use subfolder structure (hook.md + scripts) matching skills pattern
+2026-03-25 | fix | remove wrongly added dev hooks from repo management settings.local.json
+2026-03-25 | fix | gitignore .claude/svg/ test files
 2026-03-25 | add | code_dedup_check hook — checks for code duplication after every Edit/Write
 2026-03-25 | add | lint_runner hook — detects and runs linter after every Edit/Write, fixes on failure
 2026-03-25 | add | anthropic frontend-design as external skill in skills/@external.md
