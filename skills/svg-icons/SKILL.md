@@ -38,18 +38,34 @@ Derive the kebab-case filename: `FaHome` → `fa-home.svg`
 
 ## Step 3 — Ask Where to Save
 
-Ask the user:
+Resolve the home directory first:
+```bash
+echo $HOME        # Unix/macOS
+echo $USERPROFILE # Windows
+```
+
+Check if a last-used custom path exists:
+```bash
+cat "<home>/.claude/svg-icons-last-path" 2>/dev/null
+```
+
+If the file exists and has content, include it as option 2:
+> "Where should I save it?
+> 1. `~/.claude/svg/` (default icon cache)
+> 2. `<last custom path>` (last used)
+> 3. Custom path"
+
+If no last path exists, show only:
 > "Where should I save it?
 > 1. `~/.claude/svg/` (default icon cache)
 > 2. Custom path"
 
-If they choose 2, ask for the path. Resolve `~` to the actual home directory using Bash:
+If the user picks a custom path, save it for next time:
 ```bash
-echo $HOME   # Unix/macOS
-echo $USERPROFILE  # Windows
+echo "<custom path>" > "<home>/.claude/svg-icons-last-path"
 ```
 
-The resolved destination directory for option 1:
+The resolved destination for the default option:
 - **Unix/macOS**: `$HOME/.claude/svg/`
 - **Windows**: `$USERPROFILE/.claude/svg/` (e.g. `C:/Users/liavb/.claude/svg/`)
 
