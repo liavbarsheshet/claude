@@ -5,83 +5,81 @@ description: Search and download SVG icons from react-icons. Use when the user w
 
 # SVG Icons Skill
 
-Search react-icons (https://react-icons.github.io/react-icons/) for the closest matching icon to what the user wants, download it, clean it up, and set fill to `currentColor`.
+Search react-icons for the closest matching icon, download it, clean it up, and return it — silently.
+
+**Do not narrate your steps.** Do not explain what you're doing, what you're fetching, or what candidates exist. Work entirely in the background. Only speak to the user in two cases:
+1. You need to ask which icon they want (if not specified)
+2. You need the user to choose between equally good candidates (show max 3, ask once)
 
 ---
 
 ## Step 1 — Clarify the Request
 
 If the user hasn't described what icon they want, ask:
-> "What icon are you looking for? Describe it or give a keyword (e.g. 'home', 'close button', 'shopping cart')."
+> "What icon are you looking for?"
 
 ---
 
-## Step 2 — Search react-icons
+## Step 2 — Pick the Icon
 
-Use `WebFetch` to search the react-icons site:
+Use `WebFetch` on:
 ```
 https://react-icons.github.io/react-icons/search/#q=<keyword>
 ```
 
-Scan the results and identify the best matching icon. Note:
-- The icon name (e.g. `FaHome`, `MdClose`, `HiShoppingCart`)
-- The pack prefix (e.g. `fa`, `md`, `hi`, `bs`, `io5`, `lu`, `ri`, `si`, `tb`, etc.)
+The page renders dynamically so results may not be visible — that's expected. Use your knowledge of react-icons packs to determine the best match for the user's intent. Pick one icon confidently. Only ask the user if two options are genuinely ambiguous.
 
-If multiple strong candidates exist, pick the one that best matches the user's intent. If unsure between a few, briefly list them and ask the user to choose.
+Note the icon name (e.g. `FaHome`) and pack prefix (e.g. `fa`, `md`, `hi`, `bs`, `io5`, `lu`, `ri`, `tb`).
 
 ---
 
-## Step 3 — Fetch the SVG Data
+## Step 3 — Fetch SVG Data
 
-Use `WebFetch` to retrieve the icon's JS module from the `@react-icons/all-files` CDN:
+Fetch the icon's JS module:
 ```
 https://unpkg.com/@react-icons/all-files/<prefix>/<IconName>.js
 ```
 
-Example:
-```
-https://unpkg.com/@react-icons/all-files/fa/FaHome.js
-```
+Extract:
+- `viewBox` from the root `svg` attr
+- All child elements and their geometry attributes (`d`, `cx`, `cy`, `r`, `rx`, `ry`, `x`, `y`, `width`, `height`, `points`, `x1`, `y1`, `x2`, `y2`, `transform`)
 
-The file exports a function that wraps the SVG structure. Extract:
-- `viewBox` value from the `attr` object on the root `svg` tag
-- All child elements (typically `path`, `circle`, `rect`, `polyline`, `line`, etc.) and their `attr` objects
-
-If the file is unavailable on `@react-icons/all-files`, fall back to fetching the full pack index:
+Fallback if unavailable:
 ```
 https://unpkg.com/react-icons/<prefix>/index.esm.js
 ```
-Then extract the relevant icon's data from that file.
 
 ---
 
-## Step 4 — Reconstruct the SVG
-
-Build a clean SVG from the extracted data:
+## Step 4 — Build the SVG
 
 ```svg
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="<viewBox>">
-  <!-- child elements here -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="<viewBox>" fill="currentColor">
+  <!-- child elements with geometry attrs only -->
 </svg>
 ```
 
 Rules:
-- Keep only semantic shape elements: `path`, `circle`, `rect`, `ellipse`, `line`, `polyline`, `polygon`, `g`
-- Strip all attributes except geometry ones (`d`, `cx`, `cy`, `r`, `rx`, `ry`, `x`, `y`, `width`, `height`, `points`, `x1`, `y1`, `x2`, `y2`, `transform`)
+- Keep only: `path`, `circle`, `rect`, `ellipse`, `line`, `polyline`, `polygon`, `g`
+- Strip everything except geometry attributes
 - Remove: `id`, `class`, `style`, `data-*`, `aria-*`, `title`, `desc`, `focusable`, `role`
-- Remove wrapper tags: `<title>`, `<desc>`, `<defs>` (unless used for masks/clips that are actually referenced)
-- Set `fill="currentColor"` on the root `<svg>` element
-- Remove any `fill` attributes on child elements unless they are explicitly `none` (to preserve strokes or cutouts)
+- Remove tags: `<title>`, `<desc>`, `<defs>` (unless clips/masks are actually referenced)
+- `fill="currentColor"` on root `<svg>` only
+- Remove `fill` on children unless explicitly `none`
 
 ---
 
-## Step 5 — Save the File
+## Step 5 — Save and Return
 
-Ask the user where to save the file, or default to the current working directory.
+Save to the system temp directory as `<icon-name-kebab-case>.svg`.
+- Windows temp: `C:/Users/<username>/AppData/Local/Temp/` — get the username from the environment or path context
+- Unix temp: `/tmp/`
 
-Save as: `<icon-name-kebab-case>.svg`
+Example: `FaHome` → `C:/Users/liavb/AppData/Local/Temp/fa-home.svg`
 
-Example: `FaHome` → `fa-home.svg`
+Then reply with only:
+```
+[fa-home.svg](file:///C:/Users/liavb/AppData/Local/Temp/fa-home.svg) — FaHome · Font Awesome
+```
 
-Confirm once saved:
-> "Saved `fa-home.svg` — FaHome from Font Awesome."
+Nothing else. No explanation. Just the link and the source attribution on one line.
