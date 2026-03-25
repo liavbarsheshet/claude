@@ -12,7 +12,7 @@ Run:
 git rev-parse --abbrev-ref HEAD
 ```
 
-If the branch name is `main`, `master`, `develop`, or matches patterns like `release/*`, `hotfix/*` — stop and respond:
+If the branch name is `main` or `master`, or matches patterns like `release/*`, `hotfix/*` — stop and respond:
 
 > **Protected branch detected.**
 > `/git_cr` only reviews side branches. Switch to a feature or fix branch to use this command.
@@ -23,7 +23,7 @@ If the branch name is `main`, `master`, `develop`, or matches patterns like `rel
 
 Determine the merge base against the most likely parent:
 ```bash
-git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null || git merge-base HEAD develop 2>/dev/null
+git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
 ```
 
 If no merge base is found, use the first commit on this branch.
