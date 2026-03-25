@@ -71,15 +71,13 @@ Rules:
 
 ## Step 5 — Save and Return
 
-Save to the system temp directory as `<icon-name-kebab-case>.svg`.
-- Windows temp: `C:/Users/<username>/AppData/Local/Temp/` — get the username from the environment or path context
-- Unix temp: `/tmp/`
+Detect the OS from the shell environment, then save to the system temp directory as `<icon-name-kebab-case>.svg`:
+- **Windows**: `C:/Users/<username>/AppData/Local/Temp/` — resolve `<username>` from the path context or environment
+- **Unix/macOS**: `/tmp/`
 
-Example: `FaHome` → `C:/Users/liavb/AppData/Local/Temp/fa-home.svg`
-
-Then reply with only:
+Save the file to the correct path, then reply with only:
 ```
-[fa-home.svg](file:///C:/Users/liavb/AppData/Local/Temp/fa-home.svg) · [open folder](file:///C:/Users/liavb/AppData/Local/Temp) — FaHome · Font Awesome
+[fa-home.svg](<file-url>) · [open folder](<folder-url>) — FaHome · Font Awesome
 ```
 
-Nothing else. No explanation. Just the file link, folder link, and source attribution on one line.
+Where the URLs use the `file:///` protocol with the resolved absolute path. Nothing else. No explanation. Just the file link, folder link, and source attribution on one line.
