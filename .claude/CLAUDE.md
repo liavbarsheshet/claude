@@ -28,7 +28,6 @@ skills/                ← each skill lives in its own named subfolder
   @external.md         ← list of external skill sources to learn from
   <skill-name>/        ← skill definition folder
 mcps/                  ← MCP server definitions (one .json file per server)
-  @external.md         ← list of external MCP sources to learn from
 preferences/           ← preference files Claude reads and merges into ~/.claude/CLAUDE.md
   @external.md         ← list of external preference sources to learn from
 .claude/

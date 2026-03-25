@@ -33,7 +33,6 @@ Follow these steps in order:
 
 ### 4. MCPs
 - For each `.json` file in `mcps/`, read it and register the MCP server into `~/.claude/settings.json` under `mcpServers`, using the filename (without `.json`) as the server key
-- Read `mcps/@external.md` and learn each MCP listed there from its URL, then install it
 
 ### 5. Preferences
 - For each `.md` file in `preferences/` (excluding `@external.md`): read and analyze its content, then merge it into `~/.claude/CLAUDE.md`
