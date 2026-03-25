@@ -75,9 +75,14 @@ Detect the OS from the shell environment, then save to the system temp directory
 - **Windows**: `C:/Users/<username>/AppData/Local/Temp/` — resolve `<username>` from the path context or environment
 - **Unix/macOS**: `/tmp/`
 
-Save the file to the correct path, then reply with only:
+Save the file, then open the temp folder in the OS file explorer using Bash:
+- **Windows**: `explorer.exe "C:\Users\<username>\AppData\Local\Temp"`
+- **macOS**: `open /tmp`
+- **Linux**: `xdg-open /tmp`
+
+Then reply with only:
 ```
-[fa-home.svg](<file-url>) · [open folder](<folder-url>) — FaHome · Font Awesome
+[fa-home.svg](<file-url>) — FaHome · Font Awesome
 ```
 
-Where the URLs use the `file:///` protocol with the resolved absolute path. Nothing else. No explanation. Just the file link, folder link, and source attribution on one line.
+Where the file URL uses the `file:///` protocol with the resolved absolute path. Nothing else. No explanation. Just the file link and source attribution on one line.
