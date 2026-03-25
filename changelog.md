@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | add | ui-ux-pro-max-skill as external skill in skills/@external.md
 2026-03-25 | add | /git_cr command — reviews branch changes vs base, severity-ordered findings with IDE hyperlinks
 2026-03-25 | refactor | hooks now use subfolder structure (hook.md + scripts) matching skills pattern
 2026-03-25 | fix | remove wrongly added dev hooks from repo management settings.local.json
