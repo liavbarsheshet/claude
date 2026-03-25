@@ -49,25 +49,33 @@ Check if a last-used custom path exists:
 cat "<home>/.claude/svg-icons-last-path" 2>/dev/null
 ```
 
-If the file exists and has content, include it as option 2:
+Build the options list dynamically:
+- Option 1 is always: `~/.claude/svg/` (global cache)
+- Option 2 is always: `.claude/svg/` (local to current project)
+- If a last custom path exists, add it as the next option: `<last custom path>` (last used)
+- Always add a final option: Custom path
+
+Example with no last path:
 > "Where should I save it?
-> 1. `~/.claude/svg/` (default icon cache)
-> 2. `<last custom path>` (last used)
+> 1. `~/.claude/svg/` (global cache)
+> 2. `./.claude/svg/` (local project)
 > 3. Custom path"
 
-If no last path exists, show only:
+Example with last path:
 > "Where should I save it?
-> 1. `~/.claude/svg/` (default icon cache)
-> 2. Custom path"
+> 1. `~/.claude/svg/` (global cache)
+> 2. `./.claude/svg/` (local project)
+> 3. `<last custom path>` (last used)
+> 4. Custom path"
 
-If the user picks a custom path, save it for next time:
+If the user picks a custom path, persist it:
 ```bash
 echo "<custom path>" > "<home>/.claude/svg-icons-last-path"
 ```
 
-The resolved destination for the default option:
-- **Unix/macOS**: `$HOME/.claude/svg/`
-- **Windows**: `$USERPROFILE/.claude/svg/` (e.g. `C:/Users/liavb/.claude/svg/`)
+Resolved destinations:
+- **Global** — Unix: `$HOME/.claude/svg/` · Windows: `$USERPROFILE/.claude/svg/`
+- **Local** — `<current working directory>/.claude/svg/`
 
 ---
 
@@ -129,7 +137,7 @@ Save the file to `<destination>/<icon-name>.svg`.
 ## Step 7 — Open Folder and Return
 
 Open the destination folder in the OS file explorer:
-- **Windows**: `cmd.exe /c start explorer "<destination>"`
+- **Windows**: `powershell.exe -command "Start-Process explorer '<destination with backslashes>'"` — convert forward slashes to backslashes before passing the path
 - **macOS**: `open "<destination>"`
 - **Linux**: `xdg-open "<destination>"`
 
