@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | update | @external.md files now support URL, GitHub repo, or shell command (e.g. npx) entries
 2026-03-25 | add | changelog_reminder hook in .claude/ to enforce changelog updates after every push
 2026-03-24 | add | coding_style preference
 2026-03-24 | add | /analyze command
