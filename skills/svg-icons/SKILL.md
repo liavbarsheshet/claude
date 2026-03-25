@@ -5,12 +5,16 @@ description: Search and download SVG icons from react-icons. Use when the user w
 
 # SVG Icons Skill
 
-Search react-icons for the closest matching icon, download it, clean it up, and save it — silently.
+Search react-icons for the closest matching icon, download it, clean it up, and save it.
 
-**Do not narrate your steps.** Work entirely in the background. Only speak to the user in these cases:
-1. You need to ask which icon they want (if not specified)
-2. You need the user to choose between equally good candidates (show max 3, ask once)
-3. You need to ask where to save the file (see Step 5)
+## Output rules — read first, apply throughout
+
+- **Never output any text while working.** No step names, no progress updates, no explanations, no tool call commentary.
+- Only produce text output in exactly three situations:
+  1. Asking which icon the user wants (if not specified)
+  2. Asking where to save (always)
+  3. The single result line at the end
+- Run all tool calls (Bash, WebFetch, Write) silently between those three moments.
 
 ---
 
@@ -19,131 +23,116 @@ Search react-icons for the closest matching icon, download it, clean it up, and 
 If the user hasn't described what icon they want, ask:
 > "What icon are you looking for?"
 
+Then wait. Do not output anything else until the user replies.
+
 ---
 
-## Step 2 — Pick the Icon
+## Step 2 — Resolve Home Directory (silent)
 
-Use `WebFetch` on:
+```bash
+echo $USERPROFILE 2>/dev/null || echo $HOME
 ```
-https://react-icons.github.io/react-icons/search/#q=<keyword>
-```
-
-The page renders dynamically so results may not be visible — that's expected. Use your knowledge of react-icons packs to determine the best match. Pick one confidently. Only ask the user if two options are genuinely ambiguous.
-
-Note the icon name (e.g. `FaHome`) and pack prefix (e.g. `fa`, `md`, `hi`, `bs`, `io5`, `lu`, `ri`, `tb`).
-
-Derive the kebab-case filename: `FaHome` → `fa-home.svg`
 
 ---
 
 ## Step 3 — Ask Where to Save
 
-Resolve the home directory first:
-```bash
-echo $HOME        # Unix/macOS
-echo $USERPROFILE # Windows
-```
-
-Check if a last-used custom path exists:
+Check for a last-used custom path:
 ```bash
 cat "<home>/.claude/svg-icons-last-path" 2>/dev/null
 ```
 
-Build the options list dynamically:
-- Option 1 is always: `~/.claude/svg/` (global cache)
-- Option 2 is always: `.claude/svg/` (local to current project)
-- If a last custom path exists, add it as the next option: `<last custom path>` (last used)
-- Always add a final option: Custom path
+Build and present options — do not output anything before this prompt:
 
-Example with no last path:
+If no last path:
 > "Where should I save it?
-> 1. `~/.claude/svg/` (global cache)
-> 2. `./.claude/svg/` (local project)
+> 1. `~/.claude/svg/` (global)
+> 2. `.claude/svg/` (local project)
 > 3. Custom path"
 
-Example with last path:
+If last path exists:
 > "Where should I save it?
-> 1. `~/.claude/svg/` (global cache)
-> 2. `./.claude/svg/` (local project)
-> 3. `<last custom path>` (last used)
+> 1. `~/.claude/svg/` (global)
+> 2. `.claude/svg/` (local project)
+> 3. `<last path>` (last used)
 > 4. Custom path"
 
-If the user picks a custom path, persist it:
+If the user picks custom path, ask for it, then persist:
 ```bash
 echo "<custom path>" > "<home>/.claude/svg-icons-last-path"
 ```
 
 Resolved destinations:
 - **Global** — Unix: `$HOME/.claude/svg/` · Windows: `$USERPROFILE/.claude/svg/`
-- **Local** — `<current working directory>/.claude/svg/`
+- **Local** — `<cwd>/.claude/svg/`
 
 ---
 
-## Step 4 — Check Cache
+## Step 4 — Pick the Icon (silent)
 
-Before fetching anything, check if the file already exists in the destination:
+Use your knowledge of react-icons packs to find the best match. Optionally fetch:
+```
+https://react-icons.github.io/react-icons/search/#q=<keyword>
+```
+The page is dynamic so results may not appear — rely on knowledge if needed. Pick one confidently. Only ask the user if two options are genuinely ambiguous (show max 3).
+
+Note the icon name (e.g. `FaHome`), pack prefix (e.g. `fa`), and derive the filename: `FaHome` → `fa-home.svg`.
+
+---
+
+## Step 5 — Check Cache (silent)
+
 ```bash
-test -f "<destination>/<icon-name>.svg" && echo "exists" || echo "missing"
+test -f "<destination>/<filename>" && echo "exists" || echo "missing"
 ```
 
-If it exists → skip Steps 5 and 6, go directly to Step 7.
+If exists → skip Steps 6 and 7, go to Step 8 with `(cached)`.
 
 ---
 
-## Step 5 — Fetch SVG Data
+## Step 6 — Fetch SVG Data (silent)
 
-Fetch the icon's JS module:
 ```
 https://unpkg.com/@react-icons/all-files/<prefix>/<IconName>.js
 ```
 
-Extract:
-- `viewBox` from the root `svg` attr
-- All child elements and their geometry attributes (`d`, `cx`, `cy`, `r`, `rx`, `ry`, `x`, `y`, `width`, `height`, `points`, `x1`, `y1`, `x2`, `y2`, `transform`)
+Extract `viewBox` and all child element geometry attributes (`d`, `cx`, `cy`, `r`, `rx`, `ry`, `x`, `y`, `width`, `height`, `points`, `x1`, `y1`, `x2`, `y2`, `transform`).
 
-Fallback if unavailable:
+Fallback:
 ```
 https://unpkg.com/react-icons/<prefix>/index.esm.js
 ```
 
 ---
 
-## Step 6 — Build and Save the SVG
+## Step 7 — Build and Save (silent)
 
-Build a clean SVG:
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="<viewBox>" fill="currentColor">
-  <!-- child elements with geometry attrs only -->
+  <!-- child elements, geometry attrs only -->
 </svg>
 ```
 
 Rules:
 - Keep only: `path`, `circle`, `rect`, `ellipse`, `line`, `polyline`, `polygon`, `g`
-- Strip everything except geometry attributes
-- Remove: `id`, `class`, `style`, `data-*`, `aria-*`, `title`, `desc`, `focusable`, `role`
-- Remove tags: `<title>`, `<desc>`, `<defs>` (unless clips/masks are actually referenced)
-- `fill="currentColor"` on root `<svg>` only
-- Remove `fill` on children unless explicitly `none`
+- Strip all non-geometry attributes
+- Remove: `id`, `class`, `style`, `data-*`, `aria-*`, `focusable`, `role`
+- Remove tags: `<title>`, `<desc>`, `<defs>` (unless clips/masks are referenced)
+- `fill="currentColor"` on root `<svg>` only; remove `fill` on children unless `none`
 
-Ensure the destination directory exists before saving:
 ```bash
 mkdir -p "<destination>"
 ```
 
-Save the file to `<destination>/<icon-name>.svg`.
+Save to `<destination>/<filename>`.
 
 ---
 
-## Step 7 — Open Folder and Return
+## Step 8 — Return Result
 
-Open the destination folder in the OS file explorer:
-- **Windows**: `powershell.exe -command "Start-Process explorer '<destination with backslashes>'"` — convert forward slashes to backslashes before passing the path
-- **macOS**: `open "<destination>"`
-- **Linux**: `xdg-open "<destination>"`
-
-Then reply with only:
+Reply with exactly one line:
 ```
-[fa-home.svg](<file:/// absolute path>) — FaHome · Font Awesome
+[fa-home.svg](<file:///absolute/path/to/fa-home.svg>) — FaHome · Font Awesome · `<destination>`
 ```
 
-If the file was already cached, append ` (cached)` to the line. Nothing else.
+Append ` (cached)` if the file already existed. Nothing else.
