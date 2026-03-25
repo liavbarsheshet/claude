@@ -1,6 +1,6 @@
 # /git_cr
 
-Reviews all code changes in the current branch against its base branch.
+Reviews all code changes committed exclusively on the current branch.
 Finds bugs, issues, and potential problems — ordered by severity with clickable file locations.
 
 ---
@@ -19,23 +19,24 @@ If the branch name is `main` or `master`, or matches patterns like `release/*`, 
 
 ---
 
-## Step 2 — Find the Base Branch
+## Step 2 — Collect This Branch's Commits
 
-Determine the merge base against the most likely parent:
+Get all commits that exist on this branch but on no other local branch:
 ```bash
-git merge-base HEAD main 2>/dev/null || git merge-base HEAD master 2>/dev/null
+git log --oneline HEAD --not $(git for-each-ref --format='%(refname:short)' refs/heads/ | grep -v "^$(git rev-parse --abbrev-ref HEAD)$" | xargs)
 ```
 
-If no merge base is found, use the first commit on this branch.
+If no unique commits are found — stop and respond:
+
+> No commits unique to this branch yet.
 
 ---
 
-## Step 3 — Collect the Changes
+## Step 3 — Get the Full Diff
 
+Get the diff of all files touched by those commits:
 ```bash
-git diff <merge-base>...HEAD
-git diff <merge-base>...HEAD --name-only
-git log <merge-base>...HEAD --oneline
+git diff $(git log HEAD --not $(git for-each-ref --format='%(refname:short)' refs/heads/ | grep -v "^$(git rev-parse --abbrev-ref HEAD)$" | xargs) --oneline | tail -1 | awk '{print $1}')^...HEAD
 ```
 
 ---
