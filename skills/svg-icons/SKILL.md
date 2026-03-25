@@ -5,11 +5,12 @@ description: Search and download SVG icons from react-icons. Use when the user w
 
 # SVG Icons Skill
 
-Search react-icons for the closest matching icon, download it, clean it up, and return it — silently.
+Search react-icons for the closest matching icon, download it, clean it up, and save it — silently.
 
-**Do not narrate your steps.** Do not explain what you're doing, what you're fetching, or what candidates exist. Work entirely in the background. Only speak to the user in two cases:
+**Do not narrate your steps.** Work entirely in the background. Only speak to the user in these cases:
 1. You need to ask which icon they want (if not specified)
 2. You need the user to choose between equally good candidates (show max 3, ask once)
+3. You need to ask where to save the file (see Step 5)
 
 ---
 
@@ -27,13 +28,45 @@ Use `WebFetch` on:
 https://react-icons.github.io/react-icons/search/#q=<keyword>
 ```
 
-The page renders dynamically so results may not be visible — that's expected. Use your knowledge of react-icons packs to determine the best match for the user's intent. Pick one icon confidently. Only ask the user if two options are genuinely ambiguous.
+The page renders dynamically so results may not be visible — that's expected. Use your knowledge of react-icons packs to determine the best match. Pick one confidently. Only ask the user if two options are genuinely ambiguous.
 
 Note the icon name (e.g. `FaHome`) and pack prefix (e.g. `fa`, `md`, `hi`, `bs`, `io5`, `lu`, `ri`, `tb`).
 
+Derive the kebab-case filename: `FaHome` → `fa-home.svg`
+
 ---
 
-## Step 3 — Fetch SVG Data
+## Step 3 — Ask Where to Save
+
+Ask the user:
+> "Where should I save it?
+> 1. `~/.claude/svg/` (default icon cache)
+> 2. Custom path"
+
+If they choose 2, ask for the path. Resolve `~` to the actual home directory using Bash:
+```bash
+echo $HOME   # Unix/macOS
+echo $USERPROFILE  # Windows
+```
+
+The resolved destination directory for option 1:
+- **Unix/macOS**: `$HOME/.claude/svg/`
+- **Windows**: `$USERPROFILE/.claude/svg/` (e.g. `C:/Users/liavb/.claude/svg/`)
+
+---
+
+## Step 4 — Check Cache
+
+Before fetching anything, check if the file already exists in the destination:
+```bash
+test -f "<destination>/<icon-name>.svg" && echo "exists" || echo "missing"
+```
+
+If it exists → skip Steps 5 and 6, go directly to Step 7.
+
+---
+
+## Step 5 — Fetch SVG Data
 
 Fetch the icon's JS module:
 ```
@@ -51,8 +84,9 @@ https://unpkg.com/react-icons/<prefix>/index.esm.js
 
 ---
 
-## Step 4 — Build the SVG
+## Step 6 — Build and Save the SVG
 
+Build a clean SVG:
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="<viewBox>" fill="currentColor">
   <!-- child elements with geometry attrs only -->
@@ -67,22 +101,25 @@ Rules:
 - `fill="currentColor"` on root `<svg>` only
 - Remove `fill` on children unless explicitly `none`
 
+Ensure the destination directory exists before saving:
+```bash
+mkdir -p "<destination>"
+```
+
+Save the file to `<destination>/<icon-name>.svg`.
+
 ---
 
-## Step 5 — Save and Return
+## Step 7 — Open Folder and Return
 
-Detect the OS from the shell environment, then save to the system temp directory as `<icon-name-kebab-case>.svg`:
-- **Windows**: `C:/Users/<username>/AppData/Local/Temp/` — resolve `<username>` from the path context or environment
-- **Unix/macOS**: `/tmp/`
-
-Save the file, then open the temp folder in the OS file explorer using Bash:
-- **Windows**: `explorer.exe "C:\Users\<username>\AppData\Local\Temp"`
-- **macOS**: `open /tmp`
-- **Linux**: `xdg-open /tmp`
+Open the destination folder in the OS file explorer:
+- **Windows**: `cmd.exe /c start explorer "<destination>"`
+- **macOS**: `open "<destination>"`
+- **Linux**: `xdg-open "<destination>"`
 
 Then reply with only:
 ```
-[fa-home.svg](<file-url>) — FaHome · Font Awesome
+[fa-home.svg](<file:/// absolute path>) — FaHome · Font Awesome
 ```
 
-Where the file URL uses the `file:///` protocol with the resolved absolute path. Nothing else. No explanation. Just the file link and source attribution on one line.
+If the file was already cached, append ` (cached)` to the line. Nothing else.
