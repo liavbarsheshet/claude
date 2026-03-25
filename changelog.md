@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-25 | update | svg-icons skill — remember last custom save path, show as option on next run
 2026-03-25 | update | svg-icons skill — destination choice (.claude/svg or custom), caching, unix support
 2026-03-25 | update | svg-icons skill — silent execution, saves to temp dir, returns clickable hyperlink
 2026-03-25 | add | svg-icons skill — search, download, and clean SVG icons from react-icons
