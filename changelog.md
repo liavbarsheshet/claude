@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-27 | add | lb-own-git-unsafe command — direct commit+push to current branch, no branching or PR/MR
 2026-03-27 | add | lb-own-git command — installs branch-guard and pr-push hooks for full git workflow ownership
 2026-03-27 | update | web_development preference — add data-* attribute rule for conditional CSS styling
 2026-03-27 | add | web_development preference — TypeScript, CSS, icons, React composition, Context API
