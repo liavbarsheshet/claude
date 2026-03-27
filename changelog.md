@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-27 | add | 3 external skills via npx (shadcn-ui, web-accessibility, web-design-guidelines)
 2026-03-27 | add | 8 external skills from anthropics/skills (mcp-builder, canvas-design, brand-guidelines, algorithmic-art, pdf, pptx, web-artifacts-builder, webapp-testing)
 2026-03-27 | update | svg-icons skill — add Bootstrap Icons as a second icon source
 2026-03-27 | remove | styled-terminal skill

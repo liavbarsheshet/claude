@@ -14,3 +14,6 @@ Each entry can be a URL, a GitHub repo, or a shell command (e.g. `npx ...`):
 - https://github.com/anthropics/skills/tree/main/skills/web-artifacts-builder
 - https://github.com/anthropics/skills/tree/main/skills/webapp-testing
 - https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+- npx skills add giuseppe-trisciuoglio/developer-kit@shadcn-ui
+- npx skills add supercent-io/skills-template@web-accessibility
+- npx skills add vercel-labs/agent-skills@web-design-guidelines
