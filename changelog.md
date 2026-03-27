@@ -4,6 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
+2026-03-27 | add | web_development preference — TypeScript, CSS, icons, React composition, Context API
 2026-03-27 | update | rename commands: sync_lb→lb-sync, git_cr→lb-git-cr, analyze→lb-analyze
 2026-03-27 | add | README.md with full repo description and installation instructions
 2026-03-27 | update | rename sync_liav command to sync_lb

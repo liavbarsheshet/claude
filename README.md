@@ -53,6 +53,7 @@ A personal Claude Code configuration repo — commands, skills, hooks, MCPs, and
 | Preference | Description |
 |------------|-------------|
 | `coding_style` | 8 mandatory code style rules: guard clauses, bracketless single-line conditionals, longest-line-first ordering, import grouping, vertical spacing, minimal comments, concise docs, no em dashes |
+| `web_development` | TypeScript best practices, CSS over frameworks, SVG icons stored in `<src>/assets/icons/`, React children composition over prop-injection, Context API for component APIs |
 
 ---
 
