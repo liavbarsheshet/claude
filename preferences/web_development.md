@@ -31,6 +31,29 @@
 
 ---
 
+## CSS — Conditional Styling
+
+- For conditional styling, prefer `data-*` attributes over toggling class names.
+- Set the attribute on the element to reflect its current state, then target it in CSS using attribute selectors.
+
+  Prefer:
+  ```tsx
+  <button data-variant="primary" data-disabled={isDisabled}>Click</button>
+  ```
+  ```css
+  button[data-variant="primary"] { background: blue; }
+  button[data-disabled="true"] { opacity: 0.5; pointer-events: none; }
+  ```
+
+  Avoid:
+  ```tsx
+  <button className={`btn ${isPrimary ? 'btn--primary' : ''} ${isDisabled ? 'btn--disabled' : ''}`}>Click</button>
+  ```
+
+- This keeps conditional logic out of class string construction, makes state explicit in the DOM, and keeps CSS selectors readable and co-located with the element's semantics.
+
+---
+
 ## React — Component Composition
 
 - Prefer nested children composition over prop-injection of components.
