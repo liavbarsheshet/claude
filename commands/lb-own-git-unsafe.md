@@ -25,7 +25,20 @@ git rev-parse --show-toplevel 2>/dev/null
 If this is not a git repo, abort and tell the user:
 > "This project is not a git repository. `/lb-own-git-unsafe` requires git."
 
-### 2. Resolve `.claude/` Directory
+### 2. Clean Up Any Existing `lb-own-git` Installation
+
+Before installing, remove any previously installed variant (safe or unsafe) to prevent duplication:
+
+```bash
+rm -rf "<project-root>/.claude/hooks/lb-branch-guard"
+rm -rf "<project-root>/.claude/hooks/lb-pr-push"
+rm -rf "<project-root>/.claude/hooks/lb-auto-push"
+rm -f  "<project-root>/.claude/.lb-own-git-state.json"
+```
+
+Then read `.claude/settings.json` and strip out any hook entries whose `command` contains `lb-branch-guard`, `lb-pr-push`, or `lb-auto-push`. Write the cleaned result back before proceeding.
+
+### 3. Resolve `.claude/` Directory
 
 Use `<project-root>/.claude/` as the target. Create it if it doesn't exist:
 
@@ -33,7 +46,7 @@ Use `<project-root>/.claude/` as the target. Create it if it doesn't exist:
 mkdir -p "<project-root>/.claude/hooks/lb-auto-push"
 ```
 
-### 3. Write Hook: `lb-auto-push` (PostToolUse)
+### 4. Write Hook: `lb-auto-push` (PostToolUse)
 
 Write the following to `<project-root>/.claude/hooks/lb-auto-push/hook.js`:
 
@@ -82,7 +95,7 @@ console.log(JSON.stringify({
 }));
 ```
 
-### 4. Register Hook in `.claude/settings.json`
+### 5. Register Hook in `.claude/settings.json`
 
 Read the existing `.claude/settings.json` (or start from `{}`), then merge in:
 
@@ -106,7 +119,7 @@ Read the existing `.claude/settings.json` (or start from `{}`), then merge in:
 
 Preserve any existing hooks — merge arrays, do not overwrite.
 
-### 5. Confirm to User
+### 6. Confirm to User
 
 Reply with:
 > "`/lb-own-git-unsafe` installed.

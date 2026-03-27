@@ -26,7 +26,20 @@ git rev-parse --show-toplevel 2>/dev/null
 If this is not a git repo, abort and tell the user:
 > "This project is not a git repository. `/lb-own-git` requires git."
 
-### 2. Resolve `.claude/` Directory
+### 2. Clean Up Any Existing `lb-own-git` Installation
+
+Before installing, remove any previously installed variant (safe or unsafe) to prevent duplication:
+
+```bash
+rm -rf "<project-root>/.claude/hooks/lb-branch-guard"
+rm -rf "<project-root>/.claude/hooks/lb-pr-push"
+rm -rf "<project-root>/.claude/hooks/lb-auto-push"
+rm -f  "<project-root>/.claude/.lb-own-git-state.json"
+```
+
+Then read `.claude/settings.json` and strip out any hook entries whose `command` contains `lb-branch-guard`, `lb-pr-push`, or `lb-auto-push`. Write the cleaned result back before proceeding.
+
+### 3. Resolve `.claude/` Directory
 
 Use `<project-root>/.claude/` as the target. Create it if it doesn't exist:
 
@@ -35,7 +48,7 @@ mkdir -p "<project-root>/.claude/hooks/lb-branch-guard"
 mkdir -p "<project-root>/.claude/hooks/lb-pr-push"
 ```
 
-### 3. Write Hook: `lb-branch-guard` (PreToolUse)
+### 4. Write Hook: `lb-branch-guard` (PreToolUse)
 
 Write the following to `<project-root>/.claude/hooks/lb-branch-guard/hook.js`:
 
@@ -89,7 +102,7 @@ execSync(`echo '${JSON.stringify({ branch: branchName, base: baseBranch })}' > $
 console.log(JSON.stringify({ continue: true }));
 ```
 
-### 4. Write Hook: `lb-pr-push` (PostToolUse)
+### 5. Write Hook: `lb-pr-push` (PostToolUse)
 
 Write the following to `<project-root>/.claude/hooks/lb-pr-push/hook.js`:
 
@@ -157,7 +170,7 @@ const msg = prUrl
 console.log(JSON.stringify({ continue: true, message: msg }));
 ```
 
-### 5. Register Hooks in `.claude/settings.json`
+### 6. Register Hooks in `.claude/settings.json`
 
 Read the existing `.claude/settings.json` (or start from `{}`), then merge in:
 
@@ -192,7 +205,7 @@ Read the existing `.claude/settings.json` (or start from `{}`), then merge in:
 
 Preserve any existing hooks — merge arrays, do not overwrite.
 
-### 6. Confirm to User
+### 7. Confirm to User
 
 Reply with:
 > "`/lb-own-git` installed.
