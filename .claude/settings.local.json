@@ -48,7 +48,10 @@
       "WebFetch(domain:api.github.com)",
       "Bash(npm install:*)",
       "Bash(npm root:*)",
-      "Bash(NODE_PATH=\"C:\\\\Users\\\\liavb\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\" node -e \"const { style, Color } = require\\(''styled-terminal''\\); console.log\\(''ok''\\);\")"
+      "Bash(NODE_PATH=\"C:\\\\Users\\\\liavb\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\" node -e \"const { style, Color } = require\\(''styled-terminal''\\); console.log\\(''ok''\\);\")",
+      "Bash(mv commands/sync_lb.md commands/lb-sync.md)",
+      "Bash(mv commands/git_cr.md commands/lb-git-cr.md)",
+      "Bash(mv commands/analyze.md commands/lb-analyze.md)"
     ]
   },
   "hooks": {
