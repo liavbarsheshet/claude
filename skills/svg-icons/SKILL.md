@@ -1,11 +1,11 @@
 ---
 name: svg-icons
-description: Search and download SVG icons from react-icons. Use when the user wants to find an icon, get an SVG icon, download an icon from react-icons, or needs an icon for their project.
+description: Search and download SVG icons from react-icons or Bootstrap Icons. Use when the user wants to find an icon, get an SVG icon, download an icon from react-icons or Bootstrap Icons, or needs an icon for their project.
 ---
 
 # SVG Icons Skill
 
-Search react-icons for the closest matching icon(s), download them, clean them up, and save them.
+Search react-icons or Bootstrap Icons for the closest matching icon(s), download them, clean them up, and save them.
 
 ## Output rules — read first, apply throughout
 
@@ -74,15 +74,21 @@ Resolved destinations:
 
 For each icon in the list, run steps 4–7 independently:
 
-### Step 4 — Pick the Icon
+### Step 4 — Pick the Icon and Source
 
-Use your knowledge of react-icons packs to find the best match. Optionally fetch:
-```
-https://react-icons.github.io/react-icons/search/#q=<keyword>
-```
-The page is dynamic so results may not appear — rely on knowledge if needed. Pick one confidently. Only ask the user if two options are genuinely ambiguous (show max 3).
+Use your knowledge of both icon libraries to find the best match. Prefer the source the user specified; if none specified, pick the best fit across both libraries.
 
-Note the icon name (e.g. `FaHome`), pack prefix (e.g. `fa`), and derive the filename: `FaHome` → `fa-home.svg`.
+**react-icons** — large multi-pack library (Font Awesome, Material, Heroicons, etc.)
+- Optionally search: `https://react-icons.github.io/react-icons/search/#q=<keyword>`
+- Icon name format: PascalCase with pack prefix (e.g. `FaHome`, `MdSettings`)
+- Output filename: PascalCase → kebab-case with pack prefix (e.g. `FaHome` → `fa-home.svg`)
+
+**Bootstrap Icons** — single cohesive icon set by Bootstrap
+- Optionally search: `https://icons.getbootstrap.com/#search=<keyword>`
+- Icon name format: kebab-case (e.g. `house`, `person`, `gear`)
+- Output filename: `bi-<name>.svg` (e.g. `bi-house.svg`)
+
+Pick one confidently. Only ask the user if two options across libraries are genuinely ambiguous (show max 3, noting the source for each).
 
 ### Step 5 — Check Cache
 
@@ -94,16 +100,22 @@ If exists → skip Steps 6 and 7, mark as `(cached)`.
 
 ### Step 6 — Fetch SVG Data
 
+**react-icons:**
 ```
 https://unpkg.com/@react-icons/all-files/<prefix>/<IconName>.js
 ```
-
 Extract `viewBox` and all child element geometry attributes (`d`, `cx`, `cy`, `r`, `rx`, `ry`, `x`, `y`, `width`, `height`, `points`, `x1`, `y1`, `x2`, `y2`, `transform`).
 
 Fallback:
 ```
 https://unpkg.com/react-icons/<prefix>/index.esm.js
 ```
+
+**Bootstrap Icons:**
+```
+https://unpkg.com/bootstrap-icons/icons/<name>.svg
+```
+The response is a clean SVG — extract `viewBox` and all child elements directly.
 
 ### Step 7 — Build and Save
 
@@ -132,8 +144,8 @@ Save to `<destination>/<filename>`.
 
 Reply with one line per icon, in the order they were requested:
 ```
-[fa-home.svg](<file:///absolute/path/to/fa-home.svg>) — FaHome · Font Awesome · `<destination>`
-[fa-user.svg](<file:///absolute/path/to/fa-user.svg>) — FaUser · Font Awesome · `<destination>`
+[fa-home.svg](<file:///absolute/path/to/fa-home.svg>) — FaHome · Font Awesome (react-icons) · `<destination>`
+[bi-house.svg](<file:///absolute/path/to/bi-house.svg>) — house · Bootstrap Icons · `<destination>`
 ```
 
 Append ` (cached)` to any icon that already existed. Nothing else.
