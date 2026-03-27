@@ -13,6 +13,7 @@ A personal Claude Code configuration repo — commands, skills, hooks, MCPs, and
 | `/lb-analyze` | Full repo analysis — scans architecture, stack, conventions, and writes project context into CLAUDE.md |
 | `/lb-git-cr` | Code review — analyzes all commits on current branch, surfaces bugs and issues ordered by severity |
 | `/lb-sync` | Sync — diffs this repo against your installed files and applies only the delta |
+| `/lb-own-git` | Installs two project-level hooks: auto-branches before changes (`claude-<feat\|fix>-<what>`), then commits, pushes, and opens a PR/MR after |
 
 ### Skills
 
