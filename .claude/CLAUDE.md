@@ -57,9 +57,9 @@ preferences/           ← preference files Claude reads and merges into ~/.clau
 
 ---
 
-## Syncing (`/sync_liav`)
+## Syncing (`/sync_lb`)
 
-The `/sync_liav` command allows an already-trained Claude to stay up to date:
+The `/sync_lb` command allows an already-trained Claude to stay up to date:
 1. Fetch latest repo state
 2. Diff repo vs currently installed files in `~/.claude/`
 3. Apply only the delta (new, modified, removed)
@@ -72,7 +72,7 @@ The `/sync_liav` command allows an already-trained Claude to stay up to date:
 
 - **Scripts**: Use Node.js or Deno — never Python.
 - **After each task**: add, commit, and push to GitHub using git commands.
-- **Commit message format**: `<feat|fix>: <what_changed>` — e.g., `feat: add sync_liav command`
+- **Commit message format**: `<feat|fix>: <what_changed>` — e.g., `feat: add sync_lb command`
 
 ---
 
