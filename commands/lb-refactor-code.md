@@ -1,4 +1,4 @@
-# /lb-convert-code
+# /lb-refactor-code
 
 Refactors an entire codebase to align with your current global Claude preferences — coding style, web development rules, and any other active preferences — while preserving all existing logic, architecture, and design decisions.
 
@@ -12,7 +12,7 @@ Before doing anything else, output this message exactly and wait for the user to
 
 > **⚠ This is an expensive operation.**
 >
-> `/lb-convert-code` will:
+> `/lb-refactor-code` will:
 > - Analyze the full project structure
 > - Read your active global preferences
 > - Identify every file that needs updating

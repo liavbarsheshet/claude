@@ -4,7 +4,7 @@ Format: `YYYY-MM-DD | <add|update|remove> | <concise description>`
 
 ---
 
-2026-03-27 | add | lb-convert-code command — full codebase conversion to active preferences with approval gate
+2026-03-27 | add | lb-refactor-code command — full codebase conversion to active preferences with approval gate
 2026-03-27 | add | lb-tokens command — context window usage and session stats, zero token cost
 2026-03-27 | add | lb-own-git-unsafe command — direct commit+push to current branch, no branching or PR/MR
 2026-03-27 | add | lb-own-git command — installs branch-guard and pr-push hooks for full git workflow ownership

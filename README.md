@@ -16,7 +16,7 @@ A personal Claude Code configuration repo — commands, skills, hooks, MCPs, and
 | `/lb-own-git` | Installs two project-level hooks: auto-branches before changes (`claude-<feat\|fix>-<what>`), then commits, pushes, and opens a PR/MR after |
 | `/lb-own-git-unsafe` | Like `/lb-own-git` but without branching or PR/MR — commits and pushes directly to the current branch |
 | `/lb-tokens` | Show context window usage and session statistics — zero token cost, no tool calls |
-| `/lb-convert-code` | Refactor entire codebase to match current global preferences — requires approval, preserves all logic and architecture |
+| `/lb-refactor-code` | Refactor entire codebase to match current global preferences — requires approval, preserves all logic and architecture |
 
 ### Skills
 
