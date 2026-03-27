@@ -10,9 +10,9 @@ A personal Claude Code configuration repo — commands, skills, hooks, MCPs, and
 
 | Command | Description |
 |---------|-------------|
-| `/analyze` | Full repo analysis — scans architecture, stack, conventions, and writes project context into CLAUDE.md |
-| `/git_cr` | Code review — analyzes all commits on current branch, surfaces bugs and issues ordered by severity |
-| `/sync_lb` | Sync — diffs this repo against your installed files and applies only the delta |
+| `/lb-analyze` | Full repo analysis — scans architecture, stack, conventions, and writes project context into CLAUDE.md |
+| `/lb-git-cr` | Code review — analyzes all commits on current branch, surfaces bugs and issues ordered by severity |
+| `/lb-sync` | Sync — diffs this repo against your installed files and applies only the delta |
 
 ### Skills
 
@@ -76,7 +76,7 @@ Claude will:
 
 ## Staying Up To Date
 
-After installing, run `/sync_lb` at any time. It will:
+After installing, run `/lb-sync` at any time. It will:
 
 - Diff the repo against your currently installed files
 - Show a summary of what changed since your last sync

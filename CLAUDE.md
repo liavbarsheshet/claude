@@ -42,7 +42,7 @@ Follow these steps in order:
 
 ## Staying Up To Date
 
-Use `/sync_lb` to sync with the latest version of this repo.
+Use `/lb-sync` to sync with the latest version of this repo.
 The command will diff the repo against your currently installed files and apply only the changes.
 
 Check `changelog.md` for a summary of what has changed since your last sync.
